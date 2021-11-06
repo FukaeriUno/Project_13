@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    Radio radio = new Radio();
 
     @Test
     public void shouldSetCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(5);
 
@@ -19,18 +19,17 @@ class RadioTest {
 
     @Test
     public void shouldSetMoreThanMaxCurrentStation() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(5, 0, 10);
 
         radio.setCurrentStation(10);
 
-        int expected = 0;
+        int expected = 5;
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldSetMinCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(0);
 
@@ -41,18 +40,16 @@ class RadioTest {
 
     @Test
     public void shouldSetLessThanCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(-5);
 
-        int expected = 0;
+        int expected = 9;
         int actual = radio.getCurrentStation();
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldDecreaseMinCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(0);
         radio.decreaseStation();
@@ -64,7 +61,6 @@ class RadioTest {
 
     @Test
     public void shouldDecreaseCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(5);
         radio.decreaseStation();
@@ -76,7 +72,6 @@ class RadioTest {
 
     @Test
     public void shouldIncreaseMaxCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(9);
         radio.increaseStation();
@@ -88,7 +83,6 @@ class RadioTest {
 
     @Test
     public void shouldIncreaseCurrentStation() {
-        Radio radio = new Radio();
 
         radio.setCurrentStation(5);
         radio.increaseStation();
@@ -100,40 +94,26 @@ class RadioTest {
 
     @Test
     public void shouldIncreaseCurrentVolume() {
-        Radio radio = new Radio();
-
+        Radio radio = new Radio(1, 2, 5);
         radio.increaseVolume();
 
-        int expected = 1;
+        int expected = 3;
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldIncreaseMoreThan10CurrentVolume() {
-        Radio radio = new Radio();
-
+    public void shouldIncreaseMoreThan100CurrentVolume() {
+        Radio radio = new Radio(0, 100, 10);
         radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
-
-        int expected = 10;
+        int expected = 100;
         int actual = radio.getCurrentVolume();
         assertEquals(expected, actual);
     }
 
     @Test
     public void shouldDecreaseCurrentVolumeLessThan0() {
-        Radio radio = new Radio();
-
+        Radio radio = new Radio(0, 0, 10);
         radio.decreaseVolume();
 
         int expected = 0;
@@ -143,16 +123,29 @@ class RadioTest {
 
     @Test
     public void shouldDecreaseCurrentVolume() {
-        Radio radio = new Radio();
-
-        radio.increaseVolume();
-        radio.increaseVolume();
-        radio.increaseVolume();
+        Radio radio = new Radio(1, 3, 6);
 
         radio.decreaseVolume();
 
         int expected = 2;
         int actual = radio.getCurrentVolume();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldGetAmountOfStations() {
+
+        int expected = 10;
+        int actual = radio.getAmountOfStations();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSetAmountOfStations() {
+
+        radio.setAmountOfStations(5);
+        int expected = 5;
+        int actual = radio.getAmountOfStations();
         assertEquals(expected, actual);
     }
 }
